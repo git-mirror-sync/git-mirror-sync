@@ -1,7 +1,8 @@
 var express = require('express');
 var winston = require('winston');
 var bodyParser = require('body-parser');
-var app = express();
+
+var app = module.exports = express();
 
 winston.level = 'debug';
 
@@ -21,7 +22,6 @@ app.post('/repos/:owner/:repo/hooks/:id/tests', function (req, res) {
 });
 
 var port = process.env.PORT || 3002;
-
 var server = app.listen(port, function () {
   winston.info('Example app listening at %s', port);
 });
