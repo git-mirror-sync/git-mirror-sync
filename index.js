@@ -1,16 +1,27 @@
 var express = require('express');
-var app = express();
-var port = process.env.PORT || 1347;
+var winston = require('winston');
+var bodyParser = require('body-parser');
+
+var app = module.exports = express();
+
+winston.level = 'debug';
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  winston.info("GET / request");
+  winston.log('debug', req.body);
+  res.send("hi");
 });
 
-var server = app.listen(port, function () {
+app.post('/repos/:owner/:repo/hooks/:id/tests', function (req, res) {
+  winston.info("POST /repos/:owner/:repo/hooks/:id/tests request");
+  winston.log('debug', req.body);
+  res.send(req.body);
+});
 
-  var host = server.address().address;
-  var port = server.address().port;
-
-  console.log('Example app listening at http://%s:%s', host, port);
-
+var port = process.env.PORT || 3002;
+app.listen(port, function () {
+  winston.info('Example app listening at %s', port);
 });
