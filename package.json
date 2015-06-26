@@ -19,6 +19,8 @@
   "devDependencies": {
     "codacy-coverage": "^1.1.2",
     "coveralls": "^2.11.2",
+    "mocha": "^2.2.5",
+    "mocha-lcov-reporter": "0.0.2",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.11.2",
