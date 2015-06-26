@@ -4,7 +4,7 @@
   "description": "A service that will receive post hooks, trigger a pull, then push to a mirror",
   "main": "index.js",
   "scripts": {
-    "test": "grunt jshint"
+    "test": "grunt jshint; mocha"
   },
   "repository": {
     "type": "git",
@@ -17,8 +17,18 @@
   },
   "homepage": "https://github.com/obihann/git-mirror-sync",
   "devDependencies": {
+    "codacy-coverage": "^1.1.2",
+    "coveralls": "^2.11.2",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
-    "grunt-contrib-jshint": "^0.11.2"
+    "grunt-contrib-jshint": "^0.11.2",
+    "mongoose": "^4.0.6",
+    "should": "^7.0.1",
+    "superagent": "^1.2.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.13.1",
+    "express": "^4.13.0",
+    "winston": "^1.0.0"
   }
 }
