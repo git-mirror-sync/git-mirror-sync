@@ -1,6 +1,6 @@
 {
   "name": "git-mirror-sync",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A service that will receive post hooks, trigger a pull, then push to a mirror",
   "main": "index.js",
   "scripts": {
@@ -17,19 +17,23 @@
   },
   "homepage": "https://github.com/obihann/git-mirror-sync",
   "devDependencies": {
+    "child-process-promise": "^1.1.0",
     "codacy-coverage": "^1.1.2",
     "coveralls": "^2.11.2",
-    "mocha": "^2.2.5",
-    "mocha-lcov-reporter": "0.0.2",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.11.2",
+    "mocha": "^2.2.5",
+    "mocha-lcov-reporter": "0.0.2",
     "mongoose": "^4.0.6",
+    "request-promise": "^0.4.2",
     "superagent": "^1.2.0"
   },
   "dependencies": {
     "body-parser": "^1.13.1",
     "express": "^4.13.0",
+    "q": "^1.4.1",
+    "request": "^2.58.0",
     "winston": "^1.0.0"
   }
 }

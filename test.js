@@ -18,27 +18,13 @@ var profile = {
 };
 
 describe('Hooks', function() {
-    describe('Get', function() {
-        winston.info("route /");
-
-        it('check default route', function(done) {
-            request
-                .get(url + '/')
-                .end(function(err, res) {
-                    assert(res.status, 200);
-                    assert(res.body, "hi");
-                    done();
-                });
-        });
-    });
-
     describe('Post', function() {
-        winston.info("route /repos/obihann/git-mirror-sync/hooks/1/tests");
+        winston.info("route /");
         winston.log("debug", "posting: " + profile);
 
         it('check default route', function(done) {
             request
-                .post(url + '/repos/obihann/git-mirror-sync/hooks/1/tests')
+                .post(url + '/')
                 .send(profile)
                 .end(function(err, res) {
                     assert(res.status, 200);

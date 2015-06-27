@@ -1,33 +1,75 @@
+// load the dependencies
 var express = require('express');
 var winston = require('winston');
 var bodyParser = require('body-parser');
+var spawn = require('child_process').spawn;
+var Q = require('q');
+var Tasks = require('./tasks');
 
+// setup environment variables
 var app = module.exports = express();
+var port = process.env.PORT || 3002;
 
+// configure the environment
 winston.level = 'debug';
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
-  winston.info("GET / request");
-  winston.log('debug', req.body);
-  res.send("hi");
-});
-
+    //bbkey: 'CRATzv3pk97qWGKrvvYLULOzpzkh7yZy',
+//
+    //ghkey: '6b4df3bcd7e98c0ca3184fe1f32f99f0233a6788',
 app.post('/', function (req, res) {
-  winston.info("POST / request");
-  winston.log('debug', req.body);
-  res.send(req.body);
+  var bbkeyName = req.body.repository.full_name + "_token";
+  bbkeyName = bbkeyName.replace(/-|\//g, "");
+  bbkeyName = bbkeyName.toUpperCase();
+
+  var config = {
+    owner: req.body.repository.owner.login,
+    bbkey: process.env[bbkeyName],
+    ghkey: process.env.GH_TOKEN,
+    repo: req.body.repository.full_name,
+    uname: "obihann",
+    pword: "Sh|qwxev;4",
+    cwd: "gh"
+  };
+
+  var err = null;
+
+  Tasks.checkBitbucket(config)
+  .then(Tasks.gitClone)
+  .then(Tasks.addMirror)
+  .then(Tasks.pushMirror)
+  .catch(function (e) {
+    err = e;
+    winston.error(e);
+  })
+  .done(function() {
+    //once were done cleanup and delete the downloaded code
+
+    var child = spawn(
+      "rm",
+      [
+        "-rf", 
+        config.cwd
+      ]
+    );
+
+    child.stderr.on('data', function (data) {
+      err = new Error(data);
+    });
+
+    child.on('close', function (code) {
+      if (err === null) {
+        winston.log("debug", "deleted repo");
+        res.sendStatus(204);
+      } else {
+        winston.error(err);
+        res.sendStatus(500);
+      }
+    });
+  });
 });
 
-app.post('/repos/:owner/:repo/hooks/:id/tests', function (req, res) {
-  winston.info("POST /repos/:owner/:repo/hooks/:id/tests request");
-  winston.log('debug', req.body);
-  res.send(req.body);
-});
-
-var port = process.env.PORT || 3002;
 app.listen(port, function () {
   winston.info('Example app listening at %s', port);
 });
