@@ -15,6 +15,12 @@ app.get('/', function (req, res) {
   res.send("hi");
 });
 
+app.post('/', function (req, res) {
+  winston.info("POST / request");
+  winston.log('debug', req.body);
+  res.send(req.body);
+});
+
 app.post('/repos/:owner/:repo/hooks/:id/tests', function (req, res) {
   winston.info("POST /repos/:owner/:repo/hooks/:id/tests request");
   winston.log('debug', req.body);
