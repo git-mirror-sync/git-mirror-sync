@@ -32,7 +32,7 @@ module.exports = {
       if(bbRes.statusCode == 200){
         deferred.resolve(config);
       } else {
-        deferred.reject(new Error("Expected status 200 from bitbucket.org actual ", bbRes.statusCode));
+        deferred.reject(new Error("Expected status 200 from bitbucket.org actual " + bbRes.statusCode));
       }
     })
     .on('error', function(e) {

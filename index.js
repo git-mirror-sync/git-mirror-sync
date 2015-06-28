@@ -30,8 +30,6 @@ app.post('/', function (req, res) {
     cwd: "gh"
   };
 
-  console.log(config);
-
   var err = null;
 
   Tasks.checkBitbucket(config)
