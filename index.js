@@ -15,32 +15,26 @@ winston.level = 'debug';
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-    //bbkey: 'CRATzv3pk97qWGKrvvYLULOzpzkh7yZy',
-//
-    //ghkey: '6b4df3bcd7e98c0ca3184fe1f32f99f0233a6788',
 app.post('/', function (req, res) {
   var bbkeyName = req.body.repository.owner.login + "_token";
   bbkeyName = bbkeyName.replace(/-|\//g, "");
   bbkeyName = bbkeyName.toUpperCase();
-
-  console.log(bbkeyName);
 
   var config = {
     owner: req.body.repository.owner.login,
     bbkey: process.env[bbkeyName],
     ghkey: process.env.GH_TOKEN,
     repo: req.body.repository.full_name,
-    uname: "obihann",
-    pword: "Sh|qwxev;4",
+    uname: process.env.BB_USER,
+    pword: process.env.BB_PASS,
     cwd: "gh"
   };
-
-  console.log(config);
 
   var err = null;
 
   Tasks.checkBitbucket(config)
   .then(Tasks.gitClone)
+  .then(Tasks.fetchAll)
   .then(Tasks.addMirror)
   .then(Tasks.pushMirror)
   .catch(function (e) {
@@ -49,7 +43,6 @@ app.post('/', function (req, res) {
   })
   .done(function() {
     //once were done cleanup and delete the downloaded code
-
     var child = spawn(
       "rm",
       [

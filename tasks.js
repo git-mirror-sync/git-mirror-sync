@@ -1,4 +1,5 @@
 var request = require('request');
+var fs = require('fs');
 var spawn = require('child_process').spawn;
 var winston = require('winston');
 var Q = require('q');
@@ -18,17 +19,16 @@ function childExit(deferred, code, config, err) {
 }
 
 module.exports = {
-  // TODO: check bitbucket of repo exist and create it if not
   checkBitbucket: function (config) {
     winston.log("info", "checkBitbucket");
 
     var deferred = Q.defer();
 
-    // TODO: change to a oauth key
     request
     .get('https://bitbucket.org/api/1.0/repositories/' + config.repo)
     .auth(config.uname, config.pword)
     .on('response', function(bbRes) {
+      // TODO: if repo does not exist create one
       if(bbRes.statusCode == 200){
         deferred.resolve(config);
       } else {
@@ -63,6 +63,42 @@ module.exports = {
 
     child.on("close", function(code) {
       childExit(deferred, code, config, err);
+    });
+
+    return deferred.promise;
+  },
+  // spawn a process to fetch all branches from th erepo 
+  fetchAll: function (config) {
+    winston.log("info", "fetchAll");
+
+    var deferred = Q.defer();
+    var qReadFile = Q.nfbind(fs.readFile);
+    var qWriteFile = Q.nfbind(fs.writeFile);
+
+    qReadFile('checkoutall.sh', 'utf8')
+    .then(
+      function (data) {
+        return qWriteFile(config.cwd + "/checkoutall.sh", data);
+      }
+    )
+    .then(function() {
+      var child = spawn(
+        "sh",
+        ["checkoutall.sh"],
+        {cwd: config.cwd}
+      );
+
+      child.on('close', function (code) {
+        childExit(deferred, code, config);
+      });
+
+      child.stderr.on('data', function (data) {
+        var err = new Error('' + data);
+        deferred.reject(err);
+      });
+    })
+    .catch(function(err) {
+      deferred.reject(err);
     });
 
     return deferred.promise;
