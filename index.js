@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 //
     //ghkey: '6b4df3bcd7e98c0ca3184fe1f32f99f0233a6788',
 app.post('/', function (req, res) {
-  var bbkeyName = req.body.repository.full_name + "_token";
+  var bbkeyName = req.body.repository.owner.login + "_token";
   bbkeyName = bbkeyName.replace(/-|\//g, "");
   bbkeyName = bbkeyName.toUpperCase();
 
