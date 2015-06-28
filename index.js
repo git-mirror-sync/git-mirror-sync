@@ -23,6 +23,8 @@ app.post('/', function (req, res) {
   bbkeyName = bbkeyName.replace(/-|\//g, "");
   bbkeyName = bbkeyName.toUpperCase();
 
+  console.log(bbkeyName);
+
   var config = {
     owner: req.body.repository.owner.login,
     bbkey: process.env[bbkeyName],
@@ -32,6 +34,8 @@ app.post('/', function (req, res) {
     pword: "Sh|qwxev;4",
     cwd: "gh"
   };
+
+  console.log(config);
 
   var err = null;
 
