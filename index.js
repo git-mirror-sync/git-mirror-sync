@@ -11,7 +11,7 @@ var app = module.exports = express();
 var port = process.env.PORT || 3002;
 
 // configure the environment
-winston.level = 'debug';
+winston.level = process.env.WINSTON_LEVEL;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
