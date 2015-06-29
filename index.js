@@ -15,9 +15,34 @@ winston.level = process.env.WINSTON_LEVEL;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.get('/login', function(req, res) {
+  winston.log("info", "login");
+  var apiKey = process.env.BB_KEY;
+
+  if(typeof apiKey !== 'undefined') {
+    res.redirect("https://bitbucket.org/site/oauth2/authorize?client_id=" + apiKey + "&response_type=code");
+  } else {
+    winston.error("missing bitbucket client_id expected enviroment variable BB_KEY");
+    res.sendStatus(500);
+  }
+});
+
+app.get('/bbauth', function(req, res) {
+  winston.log("info", "GET /bbauth");
+
+  var auth = req.query.code;
+
+  if (typeof auth !== 'undefined') {
+      winston.log("debug", auth);
+      res.sendStatus("204");
+  } else {
+    winston.error("missing code param in bitbucket oauth callback");
+      res.sendStatus("500");
+  }
+});
+
 app.post('/', function (req, res) {
   var org;
-
 
   if(typeof(req.body.organization) !== 'undefined') {
     org = req.body.organization.login;
