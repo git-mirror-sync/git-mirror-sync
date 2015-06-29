@@ -38,6 +38,11 @@ app.get('/login', function(req, res) {
 });
 
 app.get('/bbauth', function(req, res) {
+  winston.log("debug", req);
+  res.send(req.query);
+});
+
+app.get('/code', function(req, res) {
   winston.log("info", "GET /bbauth");
 
   oauth2.getOAuthAccessToken(
