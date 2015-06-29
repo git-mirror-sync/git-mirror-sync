@@ -39,7 +39,7 @@ app.get('/login', function(req, res) {
 
 app.get('/bbauth', function(req, res) {
   winston.log("debug", req);
-  res.send(req.query);
+  res.send(req.query.code);
 });
 
 app.get('/code', function(req, res) {
