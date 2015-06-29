@@ -9,18 +9,19 @@ var Q = require('q');
 var Tasks = require('./tasks');
 
 // setup environment variables
+var bb_auth;
 var app = module.exports = express();
 var port = process.env.PORT || 3002;
+var bb_client = process.env.BB_KEY;
+var bb_secret = process.env.BB_SECRET;
 var oauth2 = new OAuth.OAuth2(
-  process.env.BB_KEY,
-  process.env.BB_SECRET,
+  bb_client,
+  bb_secret,
   'https://bitbucket.org/site/oauth2',
   '/authorize',
   '/access_token',
   null
 );
-
-oauth2.useAuthorizationHeaderforGET(true);
 
 // configure the environment
 winston.level = process.env.WINSTON_LEVEL;
@@ -37,31 +38,35 @@ app.get('/login', function(req, res) {
   res.redirect(authUrl);
 });
 
-app.get('/bbauth', function(req, res) {
-  winston.log("info", "GET /bbauth");
-
-  oauth2.getOAuthAccessToken(
-    req.query.code, 
-    {
-      'response_type':'code',
-      'grant_type':'authorization_code'
-    },
-    function(error, oauth_token, oauth_token_secret, results) {
-    if (error) {
-      winston.log("error", error);
-      res.sendStatus("500");
-    } else {
-      winston.log("debug", oauth_token);
-      winston.log("debug", oauth_token_secret);
-
-      res.send(oauth_token);
-    }
-  });
-});
-
 app.get('/code', function(req, res) {
   winston.log("debug", req);
-  res.send(req.query.code);
+
+  var code = req.query.code;
+
+  if(typeof code === undefined) {
+    winston.log("error", "/code param code is missing");
+    res.sendStatus(500);
+  } else {
+    request
+    .post(
+      {
+        url: 'https://' + bb_client + ':' + bb_secret + '@bitbucket.org/site/oauth2/access_token',
+        form: {
+          grant_type:'authorization_code',
+          code: code 
+        }
+      },
+      function(error, response, body) {
+        if (error) {
+          winston.log("debug", error);
+          res.sendStatus(500);
+        } else {
+          winston.log("debug", response);
+          winston.log("debug", body);
+          res.send(body);
+        }
+      });
+  }
 });
 
 app.post('/', function (req, res) {
