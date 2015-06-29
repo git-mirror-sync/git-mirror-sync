@@ -58,7 +58,7 @@ app.get('/bbauth', function(req, res) {
 
   if (typeof auth !== 'undefined') {
       winston.log("debug", auth);
-      res.sendStatus("204");
+      res.send(auth);
   } else {
     winston.error("missing code param in bitbucket oauth callback");
       res.sendStatus("500");
