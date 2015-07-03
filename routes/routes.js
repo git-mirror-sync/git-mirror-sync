@@ -1,7 +1,7 @@
 var winston = require('winston');
 var GitHubApi = require('github');
 
-module.exports = function(app, models, passport) {
+module.exports = function(app, models, passport, tasks) {
   app.ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) { 
         return next();
@@ -56,5 +56,5 @@ module.exports = function(app, models, passport) {
   });
 
   require("./auth")(app, models, passport);
-  require("./hooks")(app, models);
+  require("./hooks")(app, models, tasks);
 };
