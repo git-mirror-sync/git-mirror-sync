@@ -3,7 +3,7 @@ var passport = require('passport');
 var GitHubStrategy = require('passport-github2').Strategy;
 var winston = require('winston');
 var mongoose = require('mongoose');
-var Schemas = require("./schema");
+var models = require("./schema").models;
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -16,17 +16,17 @@ passport.deserializeUser(function(user, done) {
 passport.use(new GitHubStrategy({
     clientID: process.env.GH_ID,
     clientSecret: process.env.GH_SECRET,
-    callbackURL: 'http://127.0.0.1:3002/auth/github/callback'
+    callbackURL: process.env.GH_CALLBACK
   },
   function(accessToken, refreshToken, profile, done) {
-    Schemas.models.user.findOne({ githubId: profile.id }, function (err, user) {
+    models.user.findOne({ githubId: profile.id }, function (err, user) {
       if (err) {
         winston.log("error", err);
         return done(err);
       }
 
       if (!user) {
-        user = new Schemas.models.user({
+        user = new models.user({
           githubId: profile.id,
           displayName: profile.displayName,
           username: profile.username,
