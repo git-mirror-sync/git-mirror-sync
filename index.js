@@ -1,144 +1,44 @@
 // load the dependencies
-var request = require('request');
-var OAuth   = require('oauth');
-var express = require('express');
+var passport = require('./auth');
+var tasks = require('./tasks');
+var models = require("./schema").models;
+
 var winston = require('winston');
+var express = require('express');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var bodyParser = require('body-parser');
-var spawn = require('child_process').spawn;
-var Q = require('q');
-var Tasks = require('./tasks');
+var mongoose = require('mongoose');
 
 // setup environment variables
-var bb_auth;
 var app = module.exports = express();
 var port = process.env.PORT || 3002;
-var bb_client = process.env.BB_KEY;
-var bb_secret = process.env.BB_SECRET;
-var oauth2 = new OAuth.OAuth2(
-  bb_client,
-  bb_secret,
-  'https://bitbucket.org/site/oauth2',
-  '/authorize',
-  '/access_token',
-  null
-);
+
+mongoose.connect(process.env.MONGO_DB);
 
 // configure the environment
 winston.level = process.env.WINSTON_LEVEL;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-app.get('/login', function(req, res) {
-  winston.log("info", "login");
-
-  var authUrl = oauth2.getAuthorizeUrl({
-    'response_type':'code'
-  });
-
-  res.redirect(authUrl);
-});
-
-app.get('/code', function(req, res) {
-  winston.log("debug", req);
-
-  var code = req.query.code;
-
-  if(typeof code === undefined) {
-    winston.log("error", "/code param code is missing");
-    res.sendStatus(500);
-  } else {
-    request
-    .post(
-      {
-        url: 'https://' + bb_client + ':' + bb_secret + '@bitbucket.org/site/oauth2/access_token',
-        form: {
-          grant_type:'authorization_code',
-          code: code 
-        }
+app.use(session(
+  {
+    store: new MongoStore(
+      { 
+        mongooseConnection: mongoose.connection
       },
-      function(error, response, body) {
-        if (error) {
-          winston.log("debug", error);
-          res.sendStatus(500);
-        } else {
-          winston.log("debug", response);
-          winston.log("debug", body);
-          res.send(body);
-        }
-      });
+      function(err){
+        console.log(err || 'connect-mongodb setup ok');
+      }
+    ),
+    secret: 'keyboard cat',
+    resave: true,
+    saveUninitialized: false
   }
-});
+));
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.post('/', function (req, res) {
-  var org;
-
-  if(typeof(req.body.organization) !== 'undefined') {
-    org = req.body.organization.login;
-  } else {
-    org = req.body.repository.owner.login;
-  }
-
-  winston.log("debug", org);
-
-  var bbkeyName = org + "_token";
-  bbkeyName = bbkeyName.replace(/-|\//g, "");
-  bbkeyName = bbkeyName.toUpperCase();
-
-  winston.log("debug", bbkeyName);
-
-  var config = {
-    owner: org,
-    bbkey: process.env[bbkeyName],
-    ghkey: process.env.GH_TOKEN,
-    repo: req.body.repository.full_name,
-    uname: process.env.BB_USER,
-    pword: process.env.BB_PASS,
-    cwd: "gh"
-  };
-
-  winston.log("debug", config);
-
-  if (typeof(config.bbkey) == "undefined") {
-    winston.error("bbkey '" + bbkeyName + "' missing, please create one for bitbucket.com/" + org);
-    res.sendStatus(500);
-  } else {
-    var err = null;
-
-    Tasks.checkBitbucket(config)
-    .then(Tasks.gitClone)
-    .then(Tasks.fetchAll)
-    .then(Tasks.addMirror)
-    .then(Tasks.pushMirror)
-    .catch(function (e) {
-      err = e;
-      winston.error(e);
-    })
-    .done(function() {
-      //once were done cleanup and delete the downloaded code
-      var child = spawn(
-        "rm",
-        [
-          "-rf", 
-          config.cwd
-        ]
-      );
-
-      child.stderr.on('data', function (data) {
-        err = new Error(data);
-      });
-
-      child.on('close', function (code) {
-        if (err === null) {
-          winston.log("debug", "deleted repo");
-          res.sendStatus(204);
-        } else {
-          winston.error(err);
-          res.sendStatus(500);
-        }
-      });
-    });
-  }
-});
+require("./routes/routes")(app, models, passport, tasks);
 
 app.listen(port, function () {
   winston.info('Example app listening at %s', port);

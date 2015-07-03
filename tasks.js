@@ -24,9 +24,17 @@ module.exports = {
 
     var deferred = Q.defer();
 
+    var oauth = { 
+      callback: 'http://mysite.com/callback/',
+      consumer_key: config.bbclient,
+      consumer_secret:config.bbsecret 
+    };
+
     request
-    .get('https://bitbucket.org/api/1.0/repositories/' + config.repo)
-    .auth(config.uname, config.pword)
+    .get({
+      url: 'https://bitbucket.org/api/2.0/repositories/' + config.repo,
+      oauth: oauth
+    })
     .on('response', function(bbRes) {
       // TODO: if repo does not exist create one
       if(bbRes.statusCode == 200){
@@ -115,7 +123,7 @@ module.exports = {
         "remote", 
         "add", 
         "mirror", 
-        "https://" + config.bbkey + "@bitbucket.org/" + config.repo + ".git", 
+        "https://x-token-auth:" + config.bbkey + "@bitbucket.org/" + config.repo + ".git", 
         "--mirror=push"
       ],
       {cwd: config.cwd}
