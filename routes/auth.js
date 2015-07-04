@@ -74,7 +74,8 @@ module.exports = function(app, models, passport) {
               scopes: body.scopes,
               expiresIn: body.expires_in,
               refreshToken: body.refresh_token,
-              tokenType: body.token_type
+              tokenType: body.token_type,
+              createdAt: new Date.now()
             };
 
             models.user.update({username:req.user.username}, {

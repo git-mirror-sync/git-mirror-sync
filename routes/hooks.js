@@ -34,6 +34,7 @@ module.exports = function(app, models, tasks) {
       var config = {
         owner: username,
         bbkey: user.bitbucket.accessToken,
+        bbrefresh: user.bitbucket.refreshToken,
         bbclient: process.env.BB_KEY,
         bbsecret: process.env.BB_SECRET,
         ghkey: user.accessToken,

@@ -127,30 +127,51 @@ module.exports = {
 
     var deferred = Q.defer();
 
-    var child = spawn(
-      git,
-      [
-        "remote", 
-        "add", 
-        "mirror", 
-        "https://x-token-auth:" + config.bbkey + "@bitbucket.org/" + config.repo + ".git", 
-        "--mirror=push"
-      ],
-      {cwd: config.cwd}
+    // TODO: this should be only done when we need a new key, not every time
+    request
+    .post(
+      {
+        url: 'https://' + config.bbclient + ':' + config.bbsecret + '@bitbucket.org/site/oauth2/access_token',
+        form: {
+          grant_type:'refresh_token',
+          refresh_token: config.bbrefresh
+        }
+      },
+      function(error, response, body) {
+        if (error) {
+          winston.log('debug', error);
+          res.sendStatus(500);
+        } else {
+          body = JSON.parse(body);
+          var accessToken = body.access_token;
+
+          var child = spawn(
+            git,
+            [
+              "remote", 
+              "add", 
+              "mirror", 
+              "https://x-token-auth:" + accessToken + "@bitbucket.org/" + config.repo + ".git", 
+              "--mirror=push"
+            ],
+            {cwd: config.cwd}
+          );
+
+          child.on('close', function (code) {
+            childExit(deferred, code, config);
+          });
+
+          child.stdout.on('data', function (data) {
+            console.log(' ' + data);
+          });
+
+          child.stderr.on('data', function (data) {
+            var err = new Error('' + data);
+            deferred.reject(err);
+          });
+        }
+      }
     );
-
-    child.on('close', function (code) {
-      childExit(deferred, code, config);
-    });
-
-    child.stdout.on('data', function (data) {
-      console.log(' ' + data);
-    });
-
-    child.stderr.on('data', function (data) {
-      var err = new Error('' + data);
-      deferred.reject(err);
-    });
 
     return deferred.promise;
   },

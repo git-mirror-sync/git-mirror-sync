@@ -14,6 +14,7 @@ var UserSchema = new Schema({
     refreshToken: String,
     scopes: String,
     tokenType: String,
+    createdAt: Number,
     expiresIn: Number
   }
 });
