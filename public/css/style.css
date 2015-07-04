@@ -1,20 +1,47 @@
+@import url(http://fonts.googleapis.com/css?family=Fjalla+One|Oxygen);
+
 body {
-    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    font-family: 'Oxygen', sans-serif;
     font-size: 62.5%;
-    text-align: center;
+    font-size: 1.4rem;
     color: #333533;
+    background-color: #FF4E00;
 }
 
 h1 {
+    font-family: 'Fjalla One', sans-serif;
     font-size: 2rem;
 }
 
 h2 {
+    font-family: 'Fjalla One', sans-serif;
     font-size: 1.8rem;
 }
 
 p, pre {
-    font-size: 1.4rem;
+}
+
+.logo {
+    float: left;
+    width: 25%;
+}
+
+.wrapper {
+    background-color: #FFFFFF;
+    width: 50%;
+    height: 85%;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 0.05rem;
+}
+
+.footer p {
+    font-size: 1rem;
+    text-align: center;
+}
+
+.step {
+    position: relative;
 }
 
 .icon {
@@ -23,4 +50,8 @@ p, pre {
 
 .disabled {
     opacity: .4;
+}
+
+a {
+    color: #333533;
 }
