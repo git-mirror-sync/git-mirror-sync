@@ -36,11 +36,21 @@ module.exports = {
       oauth: oauth
     })
     .on('response', function(bbRes) {
-      // TODO: if repo does not exist create one
       if(bbRes.statusCode == 200){
         deferred.resolve(config);
       } else {
-        deferred.reject(new Error("Expected status 200 from bitbucket.org actual " + bbRes.statusCode));
+        request
+        .post({
+          url: 'https://bitbucket.org/api/2.0/repositories/' + config.repo,
+          oauth: oauth,
+          body: '{"scm": "git", "is_private": "true", "fork_policy": "no_public_forks" }'
+        })
+        .on('response', function(bbRes) {
+          deferred.resolve(config);
+        })
+        .on('error', function(e) {
+          deferred.reject(err);
+        });
       }
     })
     .on('error', function(e) {
@@ -75,7 +85,7 @@ module.exports = {
 
     return deferred.promise;
   },
-  // spawn a process to fetch all branches from th erepo 
+  // spawn a process to fetch all branches from the repo 
   fetchAll: function (config) {
     winston.log("info", "fetchAll");
 
