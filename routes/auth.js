@@ -82,9 +82,9 @@ module.exports = function(app, models, passport) {
             }, function(err, user) {
               if (err) {
                 winston.error(err);
-                res.send(err);
+                res.redirect("/profile");
               } else {
-                  res.render('done');
+                res.redirect("/profile");
               }
             });
           }

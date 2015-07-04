@@ -25,7 +25,11 @@ module.exports = function(app, models, passport, tasks) {
   app.get('/profile', app.ensureAuthenticated, function(req, res) {
     winston.log("info", "GET /profile");
 
-    res.render('profile');
+    if (typeof req.user.bitbucket !== "undefined") {
+      res.render('done');
+    } else {
+      res.render('profile');
+    }
 
     //var github = new GitHubApi({
       //version: '3.0.0',
