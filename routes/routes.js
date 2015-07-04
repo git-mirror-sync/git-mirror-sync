@@ -17,7 +17,7 @@ module.exports = function(app, models, passport, tasks) {
     if(typeof req.user !== 'undefined') {
       res.redirect("/profile");
     } else {
-      res.send("<html><body><a href='/auth/github'>Connect to Github</a></body></html>");
+      res.render('index');
     }
   });
 
@@ -25,9 +25,7 @@ module.exports = function(app, models, passport, tasks) {
   app.get('/profile', app.ensureAuthenticated, function(req, res) {
     winston.log("info", "GET /profile");
 
-    console.log(req.user);
-
-    res.send("<html><body><a href='/auth/bitbucket'>Connect to BitBucket</a></body></html>");
+    res.render('profile');
 
     //var github = new GitHubApi({
       //version: '3.0.0',

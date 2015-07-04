@@ -84,7 +84,7 @@ module.exports = function(app, models, passport) {
                 winston.error(err);
                 res.send(err);
               } else {
-                res.redirect("/profile");
+                  res.render('done');
               }
             });
           }

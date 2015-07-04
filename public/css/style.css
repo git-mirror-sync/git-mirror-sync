@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 62.5%;
+    text-align: center;
+    color: #333533;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.8rem;
+}
+
+p, pre {
+    font-size: 1.4rem;
+}
+
+.icon {
+    width: 10rem;
+}
+
+.disabled {
+    opacity: .4;
+}

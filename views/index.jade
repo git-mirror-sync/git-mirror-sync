@@ -1,0 +1,19 @@
+html
+  head
+    title Git Mirror Sync
+    link(rel="stylesheet", type="text/css", href="/css/style.css")
+    link(rel="stylesheet", type="text/css", href="/css/font-awesome.min.css")
+  body
+    h1 Git Mirror Sync
+    p Keep all your GitHub repos mirrored safely on BitBucket
+    h2 Step 1:
+    p Sign in with GitHub
+    a(href="/auth/github")
+      img(src="/img/octocat.png", alt="Login with GitHub", class="icon")
+    h2.disabled Step 2:
+    p.disabled Connect your BitBucket account 
+    a.disabled
+        img.disabled(src="/img/bitbucket_rgb_blue.png", alt="Login with BitBucket", class="icon")
+    h2.disabled Step 3:
+    p.disabled Add the a webhook to your GitHub repos:
+    pre.disabled https://git-mirror-sync.herokuapp.com/

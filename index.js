@@ -1,5 +1,5 @@
 // load the dependencies
-var passport = require('./auth');
+var passport = require('./passport');
 var tasks = require('./tasks');
 var models = require("./schema").models;
 
@@ -18,6 +18,8 @@ mongoose.connect(process.env.MONGO_DB);
 
 // configure the environment
 winston.level = process.env.WINSTON_LEVEL;
+app.set('view engine', 'jade');
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(session(
