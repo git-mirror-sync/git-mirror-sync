@@ -143,6 +143,8 @@ module.exports = {
           res.sendStatus(500);
         } else {
           body = JSON.parse(body);
+
+          // TODO: this should be stored in the database and replace the existing one
           var accessToken = body.access_token;
 
           var child = spawn(

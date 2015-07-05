@@ -5,6 +5,7 @@ var spawn = require('child_process').spawn;
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
+var uuid = require('node-uuid');
 
 var bb_client = process.env.BB_KEY;
 var bb_secret = process.env.BB_SECRET;
@@ -39,7 +40,7 @@ module.exports = function(app, models, tasks) {
         bbsecret: process.env.BB_SECRET,
         ghkey: user.accessToken,
         repo: req.body.repository.full_name,
-        cwd: 'gh'
+        cwd: uuid.v4()
       };
 
       tasks.checkBitbucket(config)
