@@ -1,7 +1,7 @@
 var winston = require('winston');
 var assert = require('assert');
 var request = require('superagent');
-var app = require('./index');
+var app = require('../index');
 
 var port = process.env.PORT || 3002;
 var url = "http://localhost:" + port;
