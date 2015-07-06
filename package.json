@@ -30,7 +30,6 @@
     "superagent": "^1.2.0"
   },
   "dependencies": {
-    "amqp": "^0.2.4",
     "amqplib": "^0.3.2",
     "body-parser": "^1.13.1",
     "connect-mongo": "^0.8.1",
@@ -39,7 +38,6 @@
     "express": "^4.13.0",
     "express-session": "^1.11.3",
     "github": "^0.2.4",
-    "jackrabbit": "^3.0.8",
     "jade": "~1.11.0",
     "mongoose": "^4.0.6",
     "newrelic": "^1.20.2",
