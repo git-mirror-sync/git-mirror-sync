@@ -45,15 +45,15 @@ module.exports = {
           oauth: oauth,
           body: '{"scm": "git", "is_private": "true", "fork_policy": "no_public_forks" }'
         })
-        .on('response', function(bbRes) {
+        .on('response', function() {
           deferred.resolve(config);
         })
-        .on('error', function(e) {
+        .on('error', function(err) {
           deferred.reject(err);
         });
       }
     })
-    .on('error', function(e) {
+    .on('error', function(err) {
       deferred.reject(err);
     });
 
