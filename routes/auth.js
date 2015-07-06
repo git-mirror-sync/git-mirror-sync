@@ -1,7 +1,5 @@
 var winston = require('winston');
 var request = require('request');
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var OAuth   = require('oauth');
 
 var bb_client = process.env.BB_KEY;
