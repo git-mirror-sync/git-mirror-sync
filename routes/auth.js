@@ -3,7 +3,6 @@ var request = require('request');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
-var GitHubApi = require('github');
 var OAuth   = require('oauth');
 
 var bb_client = process.env.BB_KEY;
@@ -80,7 +79,7 @@ module.exports = function(app, models, passport) {
 
             models.user.update({username:req.user.username}, {
               'bitbucket': bitbucket
-            }, function(err, user) {
+            }, function(err) {
               if (err) {
                 winston.error(err);
                 res.redirect("/profile");
