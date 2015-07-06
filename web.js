@@ -1,6 +1,7 @@
 // load the dependencies
 var utils = require('./utils');
 var tasks = require('./tasks');
+require('newrelic');
 
 var winston = require('winston');
 var express = require('express');

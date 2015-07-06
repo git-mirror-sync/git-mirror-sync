@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var uuid = require('node-uuid');
 var amqp = require('amqplib');
+require('newrelic');
 
 var tasks = require('./tasks');
 var utils = require('./utils');

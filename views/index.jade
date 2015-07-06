@@ -10,17 +10,20 @@ html
       p Keep all your GitHub repos mirrored safely on BitBucket
       p Fork me on 
         a(href="https://github.com/obihann/git-mirror-sync") GitHub
+    .account
+      a(href="/profile") Sign in
+        i.fa.fa-sign-out
     .wrapper
       .step
         h2 Step 1:
         p Sign in with GitHub
         a(href="/auth/github")
-          img(src="/img/octocat.png", alt="Login with GitHub", class="icon")
+          i.fa.fa-github.fa-2x(title="Sign in with GitHub")
       .step
         h2.disabled Step 2:
         p.disabled Connect your BitBucket account 
         a.disabled
-            img.disabled(src="/img/bitbucket_rgb_blue.png", alt="Login with BitBucket", class="icon")
+          i.fa.fa-bitbucket.fa-2x.disabled(title="Login with BitBucket")
       .step
         h2.disabled Step 3:
         p.disabled Add the webhook to your GitHub repos:

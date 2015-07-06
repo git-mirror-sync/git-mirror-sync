@@ -2,6 +2,9 @@ var winston = require('winston');
 
 module.exports = function(app, models, passport, tasks, channel) {
   app.ensureAuthenticated = function (req, res, next) {
+    winston.info("ensureAuthenticated");
+    winston.log("debug", "isAutneticated: ", req.isAuthenticated());
+
     if (req.isAuthenticated()) { 
         return next();
     }
@@ -9,28 +12,8 @@ module.exports = function(app, models, passport, tasks, channel) {
     res.redirect('/auth/github');
   };
 
-  // index
-  app.get('/', function(req, res) {
-    winston.log("info", "GET /");
-
-    if(typeof req.user !== 'undefined') {
-      res.redirect("/profile");
-    } else {
-      res.render('index');
-    }
-  });
-
-  // index
-  app.get('/profile', app.ensureAuthenticated, function(req, res) {
-    winston.log("info", "GET /profile");
-
-    if (typeof req.user.bitbucket !== "undefined") {
-      res.render('done');
-    } else {
-      res.render('profile');
-    }
-  });
-
+  require("./profile")(app);
+  require("./auth")(app, models, passport);
   require("./auth")(app, models, passport);
   require("./hooks")(app, models, tasks, channel);
 };

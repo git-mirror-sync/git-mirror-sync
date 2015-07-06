@@ -71,8 +71,10 @@ module.exports = function(app, models, passport) {
               expiresIn: body.expires_in,
               refreshToken: body.refresh_token,
               tokenType: body.token_type,
-              createdAt: new Date.now()
+              createdAt: Date.now()
             };
+
+            console.log(bitbucket);
 
             models.user.update({username:req.user.username}, {
               'bitbucket': bitbucket
