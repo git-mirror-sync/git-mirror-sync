@@ -1,7 +1,6 @@
 // load the dependencies
-var passport = require('./passport');
+var utils = require('./utils');
 var tasks = require('./tasks');
-var models = require("./schema").models;
 
 var winston = require('winston');
 var express = require('express');
@@ -9,6 +8,7 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var amqp = require('amqplib');
 
 // setup environment variables
 var app = module.exports = express();
@@ -37,10 +37,21 @@ app.use(session(
     saveUninitialized: false
   }
 ));
-app.use(passport.initialize());
-app.use(passport.session());
 
-require("./routes/routes")(app, models, passport, tasks);
+app.use(utils.passport.initialize());
+app.use(utils.passport.session());
+
+amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
+  conn.createChannel().then(function(ch) {
+    var q = 'gms.queue';
+    var ok = ch.assertQueue(q, {durable: true});
+    
+    return ok.then(function() {
+      require("./routes")(app, utils.models, utils.passport, tasks, ch);
+    });
+  });
+});
+
 
 app.listen(port, function () {
   winston.info('Example app listening at %s', port);

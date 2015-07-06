@@ -1,6 +1,6 @@
 var winston = require('winston');
 
-module.exports = function(app, models, passport, tasks) {
+module.exports = function(app, models, passport, tasks, channel) {
   app.ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) { 
         return next();
@@ -32,5 +32,5 @@ module.exports = function(app, models, passport, tasks) {
   });
 
   require("./auth")(app, models, passport);
-  require("./hooks")(app, models, tasks);
+  require("./hooks")(app, models, tasks, channel);
 };
