@@ -1,7 +1,6 @@
 .DS_Store
 .env
 .lvimrc
-newrelic.js
 *.dump
 
 # Logs
