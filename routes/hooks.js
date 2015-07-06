@@ -1,7 +1,5 @@
 var winston = require('winston');
 var spawn = require('child_process').spawn;
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
 var uuid = require('node-uuid');
 
 module.exports = function(app, models, tasks) {
