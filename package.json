@@ -4,7 +4,7 @@
   "description": "A service that will receive post hooks, trigger a pull, then push to a mirror",
   "main": "index.js",
   "scripts": {
-    "test": "grunt jshint; mocha tests"
+    "test": "grunt jshint"
   },
   "repository": {
     "type": "git",

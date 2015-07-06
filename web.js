@@ -41,7 +41,7 @@ app.use(session(
 app.use(utils.passport.initialize());
 app.use(utils.passport.session());
 
-amqp.connect('amqp://localhost').then(function(conn) {
+amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
   conn.createChannel().then(function(ch) {
     var q = 'gms.queue';
     var ok = ch.assertQueue(q, {durable: true});
