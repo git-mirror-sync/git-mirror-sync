@@ -1,14 +1,8 @@
 var winston = require('winston');
-var Q = require('q');
-var request = require('request');
 var spawn = require('child_process').spawn;
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
 var uuid = require('node-uuid');
-
-var bb_client = process.env.BB_KEY;
-var bb_secret = process.env.BB_SECRET;
 
 module.exports = function(app, models, tasks) {
   // initialize the sync of a repo
@@ -16,8 +10,6 @@ module.exports = function(app, models, tasks) {
     winston.log("info", "POST /");
 
     var username;
-
-    console.log(req.body);
 
     if(typeof(req.body.organization) !== 'undefined') {
       username = req.body.organization.login;
@@ -66,7 +58,7 @@ module.exports = function(app, models, tasks) {
           err = new Error(data);
         });
 
-        child.on('close', function (code) {
+        child.on('close', function () {
           if (err === null) {
             winston.log('debug', 'deleted repo');
             res.sendStatus(204);

@@ -1,5 +1,4 @@
 var winston = require('winston');
-var GitHubApi = require('github');
 
 module.exports = function(app, models, passport, tasks) {
   app.ensureAuthenticated = function (req, res, next) {
