@@ -12,6 +12,11 @@ module.exports = function(app) {
     }
   });
 
+  app.get('/ping', function(req, res) {
+    winston.log("info", "GET /");
+    res.send("pong");
+  });
+
   // index
   app.get('/profile', app.ensureAuthenticated, function(req, res) {
     winston.log("info", "GET /profile");
