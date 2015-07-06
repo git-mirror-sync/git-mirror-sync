@@ -14,20 +14,26 @@ html
       a(href="/logout") Logout
         i.fa.fa-sign-out
     .wrapper
-      .step
-        h2.disabled Step 1:
-        p.disabled Sign in with GitHub
-        a.disabled
-          i.fa.fa-github.fa-2x.disabled(title="Sign in with GitHub")
-      .step
-        h2.disabled Step 2:
-        p.disabled Connect your BitBucket account 
-        a.disabled
-          i.fa.fa-bitbucket.fa-2x.disabled(title="Connect your BitBucket account")
-      .step
+      .row
+        .step
+          h2.disabled Step 1:
+          p.disabled Sign in with GitHub
+          a.disabled
+            i.fa.fa-github.fa-2x.disabled(title="Sign in with GitHub")
+        .step
+          h2.disabled Step 2:
+          p.disabled Connect your BitBucket account 
+          a.disabled
+            i.fa.fa-bitbucket.fa-2x.disabled(title="Connect your BitBucket account")
+      .step.step-full
         h2 Step 3:
         p Add the webhook to your GitHub repos:
         pre https://git-mirror-sync.herokuapp.com/
+        p 
+          small
+            i IMPORTANT:
+            br
+            i If your repo is part of a GitHub organization you will have to first create a BitBucket team with a matching name.
     .footer
       p Copyright 2005, 
         a(href="http://jeffreyhann.ca") Jeffrey Hann

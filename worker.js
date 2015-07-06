@@ -23,19 +23,18 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
 
     function doWork(msg) {
       var body = JSON.parse(msg.content.toString());
-
       var username;
+      var type;
 
       if(typeof(body.organization) !== 'undefined') {
         username = body.organization.login;
+        type="org";
       } else {
         username = body.repository.owner.login;
+        type="user";
       }
       
       utils.models.user.findOne({username: body.sender.login}, function(err, user) {
-        console.log(err);
-        console.log(user);
-
         var bbkeyName = username + '_token';
         bbkeyName = bbkeyName.replace(/-|\//g, '');
         bbkeyName = bbkeyName.toUpperCase();
@@ -50,10 +49,9 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
           bbsecret: process.env.BB_SECRET,
           ghkey: user.accessToken,
           repo: body.repository.full_name,
-          cwd: uuid.v4()
+          cwd: uuid.v4(),
+          type: type
         };
-
-        console.log(config);
 
         tasks.checkBitbucket(config)
         .then(tasks.gitClone)

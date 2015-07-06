@@ -50,8 +50,18 @@ h2 {
     text-align: center;
 }
 
+.row {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
 .step {
-    position: relative;
+  display: inline-block;
+  position: relative;
+  margin: 0rem 1rem;
+}
+
+.step-full {
 }
 
 .icon {
