@@ -36,7 +36,7 @@ module.exports = {
       oauth: oauth
     })
     .on('response', function(bbRes) {
-      if(bbRes.statusCode == 200){
+      if(bbRes.statusCode === 200){
         deferred.resolve(config);
       } else {
         request
