@@ -29,8 +29,8 @@ passport.use(new GitHubStrategy({
           githubId: profile.id,
           displayName: profile.displayName,
           username: profile.username,
-          email: profile._json.email,
-          accessToken: accessToken
+          accessToken: accessToken,
+          createdAt: Date.now()
         });
 
         user.save(function(err) {
