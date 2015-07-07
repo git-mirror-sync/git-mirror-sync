@@ -1,54 +1,48 @@
-html
-  head
-    title Git Mirror Sync
-    meta(property="og:title", content="Git Mirror Sync")
-    meta(property="og:url", content="https://git-mirror-sync.herokuapp.com/")
-    meta(property="og:image", content="https://git-mirror-sync.herokuapp.com/img/git.png")
-    meta(property="og:description", content="Keep all your GitHub repos mirrored safely on BitBucket")
-
-    link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
-    link(rel="stylesheet", type="text/css", href="/css/style.css")
-    link(rel="stylesheet", type="text/css", href="/css/font-awesome.min.css")
-  body
-    .logo
-      h1 Git Mirror Sync
-      p Keep all your GitHub repos mirrored safely on BitBucket
+include header.jade
+nav.navbar-inverse.navbar-fixed-top
+  .navbar-header
+    a.navbar-brand("git-mirror-sync.herokuapp.com") Git Mirror Sync
+  ul.nav.navbar-nav.navbar-right
+    li
+      a(href="https://github.com/obihann/git-mirror-sync") Fork me on GitHub
+        i.fa.fa-code-fork
+    li
+      a(href="/logout") Sign Out
+        i.fa.fa-sign-out
+.container
+  .col-xs-10.wrapper.text-center.col-xs-offset-1
+    .row
+      h2 Keep all your GitHub repos mirrored safely on BitBucket
       p Fork me on 
         a(href="https://github.com/obihann/git-mirror-sync") GitHub
-    .account
-      a(href="/logout") Logout
-        i.fa.fa-sign-out
-    .wrapper
-      .row
-        .step
-          h2.disabled Step 1:
-          p.disabled Sign in with GitHub
-          a.disabled
-            i.fa.fa-github.fa-2x.disabled(title="Sign in with GitHub")
-        .step
-          h2 Step 2:
-          p Connect your BitBucket account 
-          a(href="/auth/bitbucket")
-            i.fa.fa-bitbucket.fa-2x(title="Connect your BitBucket account")
-      .step
-        h2.disabled Step 3:
-        p.disabled Add the webhook to your GitHub repos:
-        pre.disabled https://git-mirror-sync.herokuapp.com/
-        p.disabled
-          small
-            i IMPORTANT:
-            br
-            i If your repo is part of a GitHub organization you will have to first create a BitBucket team with a matching name.
-    .footer
-      p Copyright 2005, 
-        a(href="http://jeffreyhann.ca") Jeffrey Hann
-      p Protected under the 
-        a(href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html") GNU General Public License, version 2
-
-    script.
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-64817299-1', 'auto');
-        ga('send', 'pageview');
+    .row
+      .col-xs-12.col-sm-6
+        .panel.panel-default.disabled
+          .panel-heading
+            h3 Step 1:
+          .panel-body
+            p Sign in with GitHub
+            a(href="/auth/github")
+              i.fa.fa-github.fa-4x(title="Sign in with GitHub")
+      .col-xs-12.col-sm-6
+        .panel.panel-primary
+          .panel-heading
+            h3 Step 2:
+          .panel-body
+            p Connect your BitBucket account 
+            a
+              i.fa.fa-bitbucket.fa-4x(title="Login with BitBucket")
+    .row
+      .col.col-xs-12
+        .panel.panel-default.disabled
+          .panel-heading
+            h3 Step 3:
+          .panel-body
+            p Add the webhook to your GitHub repos:
+            pre https://git-mirror-sync.herokuapp.com/
+            p.bg-warning
+              small
+                i IMPORTANT:
+                br
+                i If your repo is part of a GitHub organization you will have to first create a BitBucket team with a matching name.
+include footer.jade
