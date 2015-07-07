@@ -22,7 +22,7 @@ module.exports = function(app, models, passport) {
   });
 
   // initialize gitbucket oauth
-  app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
+  app.get('/auth/github', passport.authenticate('github'));
 
   // github callback
   app.get('/auth/github/callback',  passport.authenticate('github'), function(req, res) {
@@ -66,15 +66,12 @@ module.exports = function(app, models, passport) {
 
             var bitbucket = {
               code: code,
-              accessToken: body.access_token,
               scopes: body.scopes,
               expiresIn: body.expires_in,
               refreshToken: body.refresh_token,
               tokenType: body.token_type,
               createdAt: Date.now()
             };
-
-            console.log(bitbucket);
 
             models.user.update({username:req.user.username}, {
               'bitbucket': bitbucket

@@ -5,12 +5,11 @@ var UserSchema = new Schema({
   githubId: String,
   displayName: String,
   username: String,
-  email: String,
   accessToken: String,
   refreshToken: String,
+  createdAt: Number,
   bitbucket: {
     code: String,
-    accessToken: String,
     refreshToken: String,
     scopes: String,
     tokenType: String,
