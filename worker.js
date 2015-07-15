@@ -9,6 +9,7 @@ var tasks = require('./tasks');
 var utils = require('./utils');
 
 mongoose.connect(process.env.MONGO_DB);
+winston.level = process.env.WINSTON_LEVEL;
 
 amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
   deliveryTagInPayload: true, 
