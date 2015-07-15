@@ -43,7 +43,7 @@ app.use(utils.passport.session());
 
 amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
   deliveryTagInPayload: true, 
-  defaultExchangeName: "gms.exchamge"
+  defaultExchangeName: "gms.exchange"
 }).then(function(conn) {
   conn.createChannel().then(function(ch) {
     var q = 'gms.queue';

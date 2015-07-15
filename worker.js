@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGO_DB);
 
 amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
   deliveryTagInPayload: true, 
-  defaultExchangeName: "gms.exchamge"
+  defaultExchangeName: "gms.exchange"
 }).then(function(conn) {
   process.once('SIGINT', function() { conn.close(); });
   return conn.createChannel().then(function(ch) {
@@ -101,6 +101,7 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
                   winston.error(err);
                 }
               });
+
               winston.log('debug', 'deleted repo');
               ch.ack(msg);
             } else {
@@ -112,7 +113,7 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
                 }
               });
 
-              ch.ack(err);
+              ch.nack(msg, false, false);
             }
           });
         });
