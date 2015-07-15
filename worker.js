@@ -39,8 +39,8 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
         bbkeyName = bbkeyName.replace(/-|\//g, '');
         bbkeyName = bbkeyName.toUpperCase();
 
-        var logEntry = new models.log({
-          time: Date.now(),
+        var logEntry = new utils.models.log({
+          time: new Date(),
           request: msg,
           repo: body.repository.full_name,
           user: user
