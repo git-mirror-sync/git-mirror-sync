@@ -1,4 +1,3 @@
-require('newrelic');
 var winston = require('winston');
 var spawn = require('child_process').spawn;
 var mongoose = require('mongoose');
