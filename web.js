@@ -1,5 +1,4 @@
 // load the dependencies
-require('newrelic');
 var utils = require('./utils');
 var tasks = require('./tasks');
 
