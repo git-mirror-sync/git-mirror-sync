@@ -19,9 +19,9 @@ var UserSchema = new Schema({
 });
 
 var LogSchema = new Schema({
-  user: Schema.Types.ObjectId,
-  time: Date,
-  status: Number,
+  user: { type: Schema.Types.ObjectId, ref: 'users' },
+  time: { type: Date, default: Date.now },
+  status: String,
   repo: String,
   commit: String,
   message: String,

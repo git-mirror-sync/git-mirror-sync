@@ -43,7 +43,6 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
         bbkeyName = bbkeyName.toUpperCase();
 
         var logEntry = new utils.models.log({
-          time: new Date(),
           request: msg,
           repo: body.repository.full_name,
           user: user
