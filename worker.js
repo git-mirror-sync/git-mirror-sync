@@ -11,7 +11,10 @@ var utils = require('./utils');
 
 mongoose.connect(process.env.MONGO_DB);
 
-amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
+amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
+  deliveryTagInPayload: true, 
+  defaultExchangeName: "gms.exchamge"
+}).then(function(conn) {
   process.once('SIGINT', function() { conn.close(); });
   return conn.createChannel().then(function(ch) {
     var ok = ch.assertQueue('gms.queue', {durable: true});
@@ -39,11 +42,10 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
         bbkeyName = bbkeyName.replace(/-|\//g, '');
         bbkeyName = bbkeyName.toUpperCase();
 
-        var logEntry = new models.log({
-          time: Date.now(),
-          request: msg,
+        var logEntry = new utils.models.log({
           repo: body.repository.full_name,
-          user: user
+          user: user,
+          request: msg.content
         });
 
         winston.log('debug', bbkeyName);
@@ -110,6 +112,7 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
                   winston.error(err);
                 }
               });
+
               ch.ack(err);
             }
           });

@@ -19,13 +19,13 @@ var UserSchema = new Schema({
 });
 
 var LogSchema = new Schema({
-  user: Schema.Types.ObjectId,
-  time: Date,
-  status: Number,
+  user: { type: Schema.Types.ObjectId, ref: 'Users' },
+  time: { type: Date, default: Date.now },
+  status: String,
   repo: String,
   commit: String,
   message: String,
-  request: Buffer 
+  request: String
 });
 
 var Users = mongoose.model('Users', UserSchema);
