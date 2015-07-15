@@ -113,7 +113,7 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
                 }
               });
 
-              ch.nack(err, false, false);
+              ch.nack(msg, false, false);
             }
           });
         });
