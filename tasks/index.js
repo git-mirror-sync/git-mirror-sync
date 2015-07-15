@@ -181,8 +181,8 @@ module.exports = {
   pushMirror: function (config) {
     winston.log("info", "pushMirror");
 
+    var err;
     var deferred = Q.defer();
-
     var child = spawn(
       git,
       [
@@ -191,8 +191,6 @@ module.exports = {
       ],
       {cwd: config.cwd}
     );
-
-    var err;
 
     child.stdout.on('data', function (data) {
       console.log(' ' + data);

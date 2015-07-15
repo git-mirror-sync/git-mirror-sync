@@ -18,13 +18,26 @@ var UserSchema = new Schema({
   }
 });
 
+var LogSchema = new Schema({
+  user: Schema.Types.ObjectId,
+  time: Date,
+  status: Number,
+  repo: String,
+  commit: String,
+  message: String,
+  request: Buffer 
+});
+
 var Users = mongoose.model('Users', UserSchema);
+var Logs = mongoose.model('Logs', LogSchema);
 
 module.exports = {
   schemas: {
-    user: UserSchema
+    user: UserSchema,
+    log: LogSchema
   },
   models: {
-    user: Users
+    user: Users,
+    log: Logs
   }
 };

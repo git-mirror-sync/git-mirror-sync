@@ -39,6 +39,13 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
         bbkeyName = bbkeyName.replace(/-|\//g, '');
         bbkeyName = bbkeyName.toUpperCase();
 
+        var logEntry = new models.log({
+          time: Date.now(),
+          request: msg,
+          repo: body.repository.full_name,
+          user: user
+        });
+
         winston.log('debug', bbkeyName);
 
         var config = {
@@ -50,7 +57,8 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
           ghkey: user.accessToken,
           repo: body.repository.full_name,
           cwd: uuid.v4(),
-          type: type
+          type: type,
+          logEntry: logEntry
         };
 
         tasks.checkBitbucket(config)
@@ -60,6 +68,14 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
         .then(tasks.pushMirror)
         .catch(function (e) {
           err = e;
+          logEntry.status = "error";
+          logEntry.message = e;
+          logEntry.save(function(err) {
+            if (err) {
+              winston.error(err);
+            }
+          });
+
           winston.error(e);
         })
         .done(function() {
@@ -78,9 +94,22 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL).then(function(conn) {
 
           child.on('close', function () {
             if (err === null) {
+              logEntry.status = "success";
+              logEntry.save(function(err) {
+                if (err) {
+                  winston.error(err);
+                }
+              });
               winston.log('debug', 'deleted repo');
               ch.ack(msg);
             } else {
+              logEntry.status = "error";
+              logEntry.message = err;
+              logEntry.save(function(err) {
+                if (err) {
+                  winston.error(err);
+                }
+              });
               ch.ack(err);
             }
           });
