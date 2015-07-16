@@ -45,7 +45,7 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
       utils.models.user.findOne({username: body.sender.login}, function(err, user) {
         if (typeof user === 'undefined' || user === null) {
           logEntry.status = "error";
-          logEntry.message = "user '" + usename + "' cannot be found";
+          logEntry.message = "user '" + username + "' cannot be found";
           logEntry.save(function(err) {
             if (err) {
               winston.error(err);
