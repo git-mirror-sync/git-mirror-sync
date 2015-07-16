@@ -43,7 +43,7 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
       }
 
       utils.models.user.findOne({username: body.sender.login}, function(err, user) {
-        if (typeof user === 'undefined') {
+        if (typeof user === 'undefined' || user === null) {
           logEntry.status = "error";
           logEntry.message = "user '" + usename + "' cannot be found";
           logEntry.save(function(err) {
@@ -51,7 +51,7 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
               winston.error(err);
             }
           });
-        } else if (typeof user.bitbucket === 'undefined') {
+        } else if (typeof user.bitbucket === 'undefined' || user.bitbucket === null) {
           logEntry.user = user;
           logEntry.status = "error";
           logEntry.message = "user has not authenticated with bitbucket";
