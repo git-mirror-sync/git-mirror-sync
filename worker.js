@@ -51,6 +51,8 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
               winston.error(err);
             }
           });
+
+          ch.nack(msg, false, false);
         } else if (typeof user.bitbucket === 'undefined' || user.bitbucket === null) {
           logEntry.user = user;
           logEntry.status = "error";
@@ -60,6 +62,8 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
               winston.error(err);
             }
           });
+
+          ch.nack(msg, false, false);
         } else {
           var bbkeyName = username + '_token';
           bbkeyName = bbkeyName.replace(/-|\//g, '');
