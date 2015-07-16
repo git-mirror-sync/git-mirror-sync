@@ -22,12 +22,17 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
     ok = ok.then(function() {
       ch.consume('gms.queue', doWork, {noAck: false});
     });
+
     return ok;
 
     function doWork(msg) {
       var body = JSON.parse(msg.content.toString());
       var username;
       var type;
+      var logEntry = new utils.models.log({
+        repo: body.repository.full_name,
+        request: msg.content
+      });
 
       if(typeof(body.organization) !== 'undefined') {
         username = body.organization.login;
@@ -36,88 +41,102 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
         username = body.repository.owner.login;
         type="user";
       }
-      
+
       utils.models.user.findOne({username: body.sender.login}, function(err, user) {
-        var bbkeyName = username + '_token';
-        bbkeyName = bbkeyName.replace(/-|\//g, '');
-        bbkeyName = bbkeyName.toUpperCase();
-
-        var logEntry = new utils.models.log({
-          repo: body.repository.full_name,
-          user: user,
-          request: msg.content
-        });
-
-        winston.log('debug', bbkeyName);
-
-        var config = {
-          owner: username,
-          bbkey: user.bitbucket.accessToken,
-          bbrefresh: user.bitbucket.refreshToken,
-          bbclient: process.env.BB_KEY,
-          bbsecret: process.env.BB_SECRET,
-          ghkey: user.accessToken,
-          repo: body.repository.full_name,
-          cwd: uuid.v4(),
-          type: type,
-          logEntry: logEntry
-        };
-
-        tasks.checkBitbucket(config)
-        .then(tasks.gitClone)
-        .then(tasks.fetchAll)
-        .then(tasks.addMirror)
-        .then(tasks.pushMirror)
-        .catch(function (e) {
-          err = e;
+        if (typeof user === 'undefined') {
           logEntry.status = "error";
-          logEntry.message = e;
+          logEntry.message = "user '" + usename + "' cannot be found";
           logEntry.save(function(err) {
             if (err) {
               winston.error(err);
             }
           });
-
-          winston.error(e);
-        })
-        .done(function() {
-          //once were done cleanup and delete the downloaded code
-          var child = spawn(
-            'rm',
-            [
-              '-rf', 
-              config.cwd
-            ]
-          );
-
-          child.stderr.on('data', function (data) {
-            err = new Error(data);
-          });
-
-          child.on('close', function () {
-            if (err === null) {
-              logEntry.status = "success";
-              logEntry.save(function(err) {
-                if (err) {
-                  winston.error(err);
-                }
-              });
-
-              winston.log('debug', 'deleted repo');
-              ch.ack(msg);
-            } else {
-              logEntry.status = "error";
-              logEntry.message = err;
-              logEntry.save(function(err) {
-                if (err) {
-                  winston.error(err);
-                }
-              });
-
-              ch.nack(msg, false, false);
+        } else if (typeof user.bitbucket === 'undefined') {
+          logEntry.user = user;
+          logEntry.status = "error";
+          logEntry.message = "user has not authenticated with bitbucket";
+          logEntry.save(function(err) {
+            if (err) {
+              winston.error(err);
             }
           });
-        });
+        } else {
+          var bbkeyName = username + '_token';
+          bbkeyName = bbkeyName.replace(/-|\//g, '');
+            bbkeyName = bbkeyName.toUpperCase();
+          logEntry.user = user;
+
+          winston.log('debug', bbkeyName);
+
+          var config = {
+            owner: username,
+            bbkey: user.bitbucket.accessToken,
+            bbrefresh: user.bitbucket.refreshToken,
+            bbclient: process.env.BB_KEY,
+            bbsecret: process.env.BB_SECRET,
+            ghkey: user.accessToken,
+            repo: body.repository.full_name,
+            cwd: uuid.v4(),
+            type: type,
+            logEntry: logEntry
+          };
+
+          tasks.checkBitbucket(config)
+          .then(tasks.gitClone)
+          .then(tasks.fetchAll)
+          .then(tasks.addMirror)
+          .then(tasks.pushMirror)
+          .catch(function (e) {
+            err = e;
+            logEntry.status = "error";
+            logEntry.message = e;
+            logEntry.save(function(err) {
+              if (err) {
+                winston.error(err);
+              }
+            });
+
+            winston.error(e);
+          })
+          .done(function() {
+            //once were done cleanup and delete the downloaded code
+            var child = spawn(
+              'rm',
+              [
+                '-rf', 
+                config.cwd
+              ]
+            );
+
+            child.stderr.on('data', function (data) {
+              err = new Error(data);
+            });
+
+            child.on('close', function () {
+              if (err === null) {
+                logEntry.status = "success";
+                logEntry.save(function(err) {
+                  if (err) {
+                    winston.error(err);
+                  }
+                });
+
+                winston.log('debug', 'deleted repo');
+                ch.ack(msg);
+              } else {
+                logEntry.status = "error";
+                logEntry.message = err;
+                logEntry.save(function(err) {
+                  if (err) {
+                    winston.error(err);
+                  }
+                });
+
+                ch.nack(msg, false, false);
+              }
+            });
+          });
+        }
       });
     }
   });
