@@ -13,7 +13,7 @@ module.exports = function(app) {
   });
 
   app.get('/ping', function(req, res) {
-    winston.log("info", "GET /");
+    winston.log("info", "GET /ping");
     res.send("pong");
   });
 
