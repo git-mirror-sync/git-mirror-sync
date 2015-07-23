@@ -1,5 +1,23 @@
 # Change Log
 
+## [Unreleased](https://github.com/obihann/git-mirror-sync/tree/HEAD)
+
+[Full Changelog](https://github.com/obihann/git-mirror-sync/compare/v1.1.3...HEAD)
+
+**Fixed bugs:**
+
+- user profile page has active link to github auth [\#61](https://github.com/obihann/git-mirror-sync/issues/61)
+- store session secret as an environment variable [\#59](https://github.com/obihann/git-mirror-sync/issues/59)
+- we are only checking the queue when the worker starts [\#55](https://github.com/obihann/git-mirror-sync/issues/55)
+- profile doesn't update after BitBucket authentication [\#47](https://github.com/obihann/git-mirror-sync/issues/47)
+
+**Merged pull requests:**
+
+- Develop [\#69](https://github.com/obihann/git-mirror-sync/pull/69) ([obihann](https://github.com/obihann))
+- fixing bitbucket object not being stored in session user [\#68](https://github.com/obihann/git-mirror-sync/pull/68) ([obihann](https://github.com/obihann))
+- hiding session in a env variable [\#67](https://github.com/obihann/git-mirror-sync/pull/67) ([obihann](https://github.com/obihann))
+- Fixing profiles [\#66](https://github.com/obihann/git-mirror-sync/pull/66) ([obihann](https://github.com/obihann))
+
 ## [v1.1.3](https://github.com/obihann/git-mirror-sync/tree/v1.1.3) (2015-07-16)
 [Full Changelog](https://github.com/obihann/git-mirror-sync/compare/1.1.2...v1.1.3)
 
