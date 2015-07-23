@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/obihann/git-mirror-sync/tree/HEAD)
-
-[Full Changelog](https://github.com/obihann/git-mirror-sync/compare/v1.1.3...HEAD)
+## [v1.1.4](https://github.com/obihann/git-mirror-sync/tree/v1.1.4) (2015-07-23)
+[Full Changelog](https://github.com/obihann/git-mirror-sync/compare/v1.1.3...v1.1.4)
 
 **Fixed bugs:**
 
