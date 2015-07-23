@@ -12,6 +12,7 @@ var amqp = require('amqplib');
 
 // setup environment variables
 var app = module.exports = express();
+var secret = process.env.SESSION_SECRET;
 var port = process.env.PORT || 3002;
 
 mongoose.connect(process.env.MONGO_DB);
@@ -32,7 +33,7 @@ app.use(session(
         console.log(err || 'connect-mongodb setup ok');
       }
     ),
-    secret: 'keyboard cat',
+    secret: secret,
     resave: true,
     saveUninitialized: false
   }
