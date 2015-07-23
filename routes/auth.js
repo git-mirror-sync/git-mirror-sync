@@ -80,6 +80,7 @@ module.exports = function(app, models, passport) {
                 winston.error(err);
                 res.redirect("/profile");
               } else {
+                req.user.bitbucket = bitbucket;
                 res.redirect("/profile");
               }
             });
