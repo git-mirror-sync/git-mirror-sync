@@ -9,6 +9,7 @@ var tasks = require('./tasks');
 var utils = require('./utils');
 
 mongoose.connect(process.env.MONGO_DB);
+winston.level = process.env.WINSTON_LEVEL;
 
 amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
   deliveryTagInPayload: true, 
@@ -44,12 +45,14 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
       utils.models.user.findOne({username: body.sender.login}, function(err, user) {
         if (typeof user === 'undefined' || user === null) {
           logEntry.status = "error";
-          logEntry.message = "user '" + usename + "' cannot be found";
+          logEntry.message = "user '" + username + "' cannot be found";
           logEntry.save(function(err) {
             if (err) {
               winston.error(err);
             }
           });
+
+          ch.nack(msg, false, false);
         } else if (typeof user.bitbucket === 'undefined' || user.bitbucket === null) {
           logEntry.user = user;
           logEntry.status = "error";
@@ -59,6 +62,8 @@ amqp.connect(process.env.RABBITMQ_BIGWIG_URL, {
               winston.error(err);
             }
           });
+
+          ch.nack(msg, false, false);
         } else {
           var bbkeyName = username + '_token';
           bbkeyName = bbkeyName.replace(/-|\//g, '');

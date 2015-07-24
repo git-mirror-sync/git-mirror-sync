@@ -1,6 +1,6 @@
 {
   "name": "git-mirror-sync",
-  "version": "1.0.0",
+  "version": "1.1.4",
   "description": "A service that will receive post hooks, trigger a pull, then push to a mirror",
   "main": "index.js",
   "scripts": {
@@ -39,6 +39,7 @@
     "express-session": "^1.11.3",
     "github": "^0.2.4",
     "jade": "~1.11.0",
+    "lodash": "^3.10.0",
     "mongoose": "^4.0.6",
     "newrelic": "^1.20.2",
     "node-uuid": "~1.4.3",

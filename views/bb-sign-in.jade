@@ -4,7 +4,7 @@ nav.navbar-inverse.navbar-fixed-top
     a.navbar-brand("git-mirror-sync.herokuapp.com") Git Mirror Sync
   ul.nav.navbar-nav.navbar-right
     li
-      a(href="https://github.com/obihann/git-mirror-sync") Fork me on GitHub
+      a(href="https://github.com/git-mirror-sync/git-mirror-sync") Fork me on GitHub
         i.fa.fa-code-fork
     li
       a(href="/logout") Sign Out
@@ -13,6 +13,8 @@ nav.navbar-inverse.navbar-fixed-top
   .col-xs-10.wrapper.text-center.col-xs-offset-1
     .row
       h2 Keep all your GitHub repos mirrored safely on BitBucket
+      p Fork me on 
+        a(href="https://github.com/obihann/git-mirror-sync") GitHub
     .row
       .col-xs-12.col-sm-6
         .panel.panel-default.disabled
@@ -23,16 +25,16 @@ nav.navbar-inverse.navbar-fixed-top
             a
               i.fa.fa-github.fa-4x(title="Sign in with GitHub")
       .col-xs-12.col-sm-6
-        .panel.panel-default.disabled
+        .panel.panel-primary
           .panel-heading
             h3 Step 2:
           .panel-body
             p Connect your BitBucket account 
-            a
+            a(href="/auth/bitbucket")
               i.fa.fa-bitbucket.fa-4x(title="Login with BitBucket")
     .row
       .col.col-xs-12
-        .panel.panel-primary
+        .panel.panel-default.disabled
           .panel-heading
             h3 Step 3:
           .panel-body
@@ -44,4 +46,3 @@ nav.navbar-inverse.navbar-fixed-top
                 br
                 i If your repo is part of a GitHub organization you will have to first create a BitBucket team with a matching name.
 include footer.jade
-

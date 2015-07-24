@@ -1,6 +1,7 @@
 var winston = require('winston');
+var _ = require('lodash');
 
-module.exports = function(app) {
+module.exports = function(app, models) {
   // index
   app.get('/', function(req, res) {
     winston.log("info", "GET /");
@@ -12,19 +13,24 @@ module.exports = function(app) {
     }
   });
 
-  app.get('/ping', function(req, res) {
-    winston.log("info", "GET /ping");
-    res.send("pong");
-  });
-
   // index
   app.get('/profile', app.ensureAuthenticated, function(req, res) {
     winston.log("info", "GET /profile");
 
     if (typeof req.user.bitbucket !== "undefined") {
-      res.render('done');
+      models.log.find({user: req.user._id}, function(err, logs) {
+        if (err) {
+          winston.error(err);
+        }
+
+        var opts = {
+          logs: logs
+        };
+
+        res.render('profile', opts);
+      });
     } else {
-      res.render('profile');
+      res.render('bb-sign-in');
     }
   });
 };
