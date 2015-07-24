@@ -33,6 +33,7 @@ app.use(session(
         console.log(err || 'connect-mongodb setup ok');
       }
     ),
+    ttl: 24 * 3600,
     secret: secret,
     resave: true,
     saveUninitialized: false
