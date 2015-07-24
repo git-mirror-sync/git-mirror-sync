@@ -31,7 +31,7 @@ nav.navbar-inverse.navbar-fixed-top
             a
               i.fa.fa-bitbucket.fa-4x(title="Login with BitBucket")
     .row
-      .col.col-xs-12
+      .col-xs-12
         .panel.panel-primary
           .panel-heading
             h3 Step 3:
@@ -44,51 +44,52 @@ nav.navbar-inverse.navbar-fixed-top
                 br
                 i If your repo is part of a GitHub organization you will have to first create a BitBucket team with a matching name.
     .row
-      .col.col-xs-12
+      .col-xs-12
         .panel.panel-default
           .panel-heading
             h3 Logs:
           .panel-body
-            table.logs.text-left.table.table-hover.table-bordered
-              tr
-                td
-                  h4 date
-                td
-                  h4 status
-                td
-                  h4 repo
-                td
-                  h4 message
+            table.logs.table-center.table.table-hover.table-bordered
+              thead
+                tr.row
+                  td.col-xs-3
+                    h4 date
+                  td.col-xs-1
+                    h4 status
+                  td.col-xs-2
+                    h4 repo
+                  td.col-xs-4
+                    h4 message
               each val in logs
                 if val.status == "success"
-                  tr.success
-                    td
+                  tr.success.row
+                    td.col-xs-3
                       span.log-time= val.time
-                    td
+                    td.col-xs-1
                       span.log-status= val.status
-                    td
+                    td.col-xs-2
                       span.log-repo= val.repo
-                    td
+                    td.col-xs-4
                       span.log-repo= val.message
                 else if val.status == "error"
-                  tr.danger
-                    td
+                  tr.danger.row
+                    td.col-xs-3
                       span.log-time= val.time
-                    td
+                    td.col-xs-1
                       span.log-status= val.status
-                    td
+                    td.col-xs-2
                       span.log-repo= val.repo
-                    td
+                    td.col-xs-4
                       span.log-repo= val.message
                 else
-                  tr.warning
-                    td
+                  tr.warning.row
+                    td.col-xs-3
                       span.log-time= val.time
-                    td
+                    td.col-xs-1
                       span.log-status= val.status
-                    td
+                    td.col-xs-2
                       span.log-repo= val.repo
-                    td
+                    td.col-xs-4
                       span.log-repo= val.message
 include footer.jade
 
