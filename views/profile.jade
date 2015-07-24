@@ -43,5 +43,52 @@ nav.navbar-inverse.navbar-fixed-top
                 i IMPORTANT:
                 br
                 i If your repo is part of a GitHub organization you will have to first create a BitBucket team with a matching name.
+    .row
+      .col.col-xs-12
+        .panel.panel-default
+          .panel-heading
+            h3 Logs:
+          .panel-body
+            table.logs.text-left.table.table-hover.table-bordered
+              tr
+                td
+                  h4 date
+                td
+                  h4 status
+                td
+                  h4 repo
+                td
+                  h4 message
+              each val in logs
+                if val.status == "success"
+                  tr.success
+                    td
+                      span.log-time= val.time
+                    td
+                      span.log-status= val.status
+                    td
+                      span.log-repo= val.repo
+                    td
+                      span.log-repo= val.message
+                else if val.status == "error"
+                  tr.danger
+                    td
+                      span.log-time= val.time
+                    td
+                      span.log-status= val.status
+                    td
+                      span.log-repo= val.repo
+                    td
+                      span.log-repo= val.message
+                else
+                  tr.warning
+                    td
+                      span.log-time= val.time
+                    td
+                      span.log-status= val.status
+                    td
+                      span.log-repo= val.repo
+                    td
+                      span.log-repo= val.message
 include footer.jade
 

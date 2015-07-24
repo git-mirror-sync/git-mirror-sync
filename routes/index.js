@@ -12,7 +12,12 @@ module.exports = function(app, models, passport, tasks, channel) {
     res.redirect('/auth/github');
   };
 
-  require("./profile")(app);
+  app.get('/ping', function(req, res) {
+    winston.log("info", "GET /ping");
+    res.send("pong");
+  });
+
+  require("./profile")(app, models);
   require("./auth")(app, models, passport);
   require("./auth")(app, models, passport);
   require("./hooks")(app, models, tasks, channel);
