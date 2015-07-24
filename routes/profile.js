@@ -22,9 +22,9 @@ module.exports = function(app) {
     winston.log("info", "GET /profile");
 
     if (typeof req.user.bitbucket !== "undefined") {
-      res.render('done');
-    } else {
       res.render('profile');
+    } else {
+      res.render('bb-sign-in');
     }
   });
 };
