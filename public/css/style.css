@@ -17,6 +17,10 @@ h3 {
     font-family: 'Fjalla One', sans-serif;
 }
 
+.logs {
+  overflow-x: scroll;
+}
+
 .table .col-xs-4 {
   max-width: 500px;
   word-wrap: break-word;
