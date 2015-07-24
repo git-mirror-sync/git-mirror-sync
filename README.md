@@ -1,5 +1,5 @@
 [![GitHub release](https://img.shields.io/github/release/git-mirror-sync/git-mirror-sync.svg)](https://github.com/git-mirror-sync/git-mirror-sync/releases)
-[![GitHub tag](https://img.shields.io/github/tag/git-mirror-sync/git-mirror-sync.svg)](https://github.com/-mirror-sync/git-mirror-sync/tags)
+[![GitHub tag](https://img.shields.io/github/tag/git-mirror-sync/git-mirror-sync.svg)](https://github.com/git-mirror-sync/git-mirror-sync/tags)
 [![GitHub issues](https://img.shields.io/github/issues/git-mirror-sync/git-mirror-sync.svg)](https://github.com/git-mirror-sync/git-mirror-sync/issues)
 [![Build Status](https://travis-ci.org/git-mirror-sync/git-mirror-sync.svg?branch=master)](https://travis-ci.org/git-mirror-sync/git-mirror-sync)
 [![Coverage Status](https://coveralls.io/repos/git-mirror-sync/git-mirror-sync/badge.svg)](https://coveralls.io/r/git-mirror-sync/git-mirror-sync)
