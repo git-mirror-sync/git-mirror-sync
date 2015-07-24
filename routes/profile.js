@@ -24,7 +24,7 @@ module.exports = function(app, models) {
         }
 
         var opts = {
-          logs: logs
+          logs: logs.reverse()
         };
 
         res.render('profile', opts);
