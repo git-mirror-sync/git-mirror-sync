@@ -17,6 +17,11 @@ h3 {
     font-family: 'Fjalla One', sans-serif;
 }
 
+.table .col-xs-4 {
+  max-width: 500px;
+  word-wrap: break-word;
+}
+
 .navbar-nav {
   margin-right: 1rem;
 }
