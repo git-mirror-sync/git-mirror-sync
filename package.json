@@ -1,6 +1,6 @@
 {
   "name": "git-mirror-sync",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "A service that will receive post hooks, trigger a pull, then push to a mirror",
   "main": "index.js",
   "scripts": {

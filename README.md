@@ -2,7 +2,7 @@
 [![GitHub tag](https://img.shields.io/github/tag/git-mirror-sync/git-mirror-sync.svg)](https://github.com/git-mirror-sync/git-mirror-sync/tags)
 [![GitHub issues](https://img.shields.io/github/issues/git-mirror-sync/git-mirror-sync.svg)](https://github.com/git-mirror-sync/git-mirror-sync/issues)
 [![Build Status](https://travis-ci.org/git-mirror-sync/git-mirror-sync.svg?branch=master)](https://travis-ci.org/git-mirror-sync/git-mirror-sync)
-[![Coverage Status](https://coveralls.io/repos/git-mirror-sync/git-mirror-sync/badge.svg)](https://coveralls.io/r/git-mirror-sync/git-mirror-sync)
+[![Coverage Status](https://coveralls.io/repos/git-mirror-sync/git-mirror-sync/badge.svg?branch=master&service=github)](https://coveralls.io/github/git-mirror-sync/git-mirror-sync?branch=master)
 [![Codacy Badge](https://www.codacy.com/project/badge/adabfdeb492749989a68274cb7233468)](https://www.codacy.com/app/jeffhann/git-mirror-sync)
 [![Dependency Status](https://david-dm.org/git-mirror-sync/git-mirror-sync.svg)](https://david-dm.org/git-mirror-sync/-mirror-sync)
 [![GitHub license](https://img.shields.io/github/license/git-mirror-sync/git-mirror-sync.svg)]()
