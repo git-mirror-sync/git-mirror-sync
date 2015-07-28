@@ -22,10 +22,12 @@ module.exports = function(app, models, passport) {
   });
 
   // initialize gitbucket oauth
-  app.get('/auth/github', passport.authenticate('github'));
+  app.get('/auth/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
+  //app.get('/auth/github', passport.authenticate('github'));
 
   // github callback
-  app.get('/auth/github/callback',  passport.authenticate('github'), function(req, res) {
+  app.get('/auth/github/callback',  passport.authenticate('github', { scope: [ 'user:email' ] }), function(req, res) {
+  //app.get('/auth/github/callback',  passport.authenticate('github'), function(req, res) {
     winston.log("info", "GET /auth/github/callback");
     res.redirect("/profile");
   });
