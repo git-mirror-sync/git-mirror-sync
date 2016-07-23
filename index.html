@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Git Mirror Sync</title>
+    <meta property="og:title" content="Git Mirror Sync">
+    <meta property="og:url" content="https://git-mirror-sync.herokuapp.com/">
+    <meta property="og:image" content="https://git-mirror-sync.herokuapp.com/img/git.png">
+    <meta property="og:description" content="Keep all your GitHub repos mirrored safely on BitBucket">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <script src="bundle.js"></script>
+  </head>
+  <body></body>
+</html>
+<nav class="navbar-inverse navbar-fixed-top">
+  <div class="navbar-header"><a git-mirror-sync.herokuapp.com class="navbar-brand">Git Mirror Sync</a></div>
+  <ul class="nav navbar-nav navbar-right">
+    <li><a href="https://github.com/git-mirror-sync/git-mirror-sync">Fork me on GitHub<i class="fa fa-code-fork"></i></a></li>
+    <li><a href="/profile">Sign in<i class="fa fa-sign-in"></i></a></li>
+  </ul>
+</nav>
+<div class="container">
+  <div class="col-xs-10 wrapper text-center col-xs-offset-1">
+    <div class="row">
+      <h2>Keep all your GitHub repos mirrored safely on BitBucket</h2>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3>Step 1:</h3>
+          </div>
+          <div class="panel-body">
+            <p>Sign in with GitHub</p><a href="/auth/github"><i title="Sign in with GitHub" class="fa fa-github fa-4x"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="panel panel-default disabled">
+          <div class="panel-heading">
+            <h3>Step 2:</h3>
+          </div>
+          <div class="panel-body">
+            <p>Connect your BitBucket account </p><a><i title="Login with BitBucket" class="fa fa-bitbucket fa-4x"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-xs-12">
+        <div class="panel panel-default disabled">
+          <div class="panel-heading">
+            <h3>Step 3:</h3>
+          </div>
+          <div class="panel-body">
+            <p>Add the webhook to your GitHub repos:</p>
+            <pre>https://git-mirror-sync.herokuapp.com/</pre>
+            <p class="bg-warning"><small><i>IMPORTANT:</i><br><i>If your repo is part of a GitHub organization you will have to first create a BitBucket team with a matching name.</i></small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="text-center small">
+  <nav class="navbar-inverse navbar-fixed-bottom">
+    <p>Copyright 2005, <a href="http://jeffreyhann.ca">Jeffrey Hann</a></p>
+    <p>Protected under the <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html">GNU General Public License, version 2</a></p>
+  </nav>
+</footer>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-64817299-1', 'auto');
+    ga('send', 'pageview');
+</script>
