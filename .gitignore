@@ -3,6 +3,10 @@
 .lvimrc
 *.dump
 
+public/*
+!public/img/*
+!public/favicon.ico
+
 # Logs
 logs
 *.log
