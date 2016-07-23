@@ -4,7 +4,10 @@
   "description": "A service that will receive post hooks, trigger a pull, then push to a mirror",
   "main": "index.js",
   "scripts": {
-    "test": "grunt jshint"
+    "test": "grunt jshint",
+    "web": "source .env && node ./src/web.js",
+    "pack": "webpack -d",
+    "lint": "csslint src/css/style.css"
   },
   "repository": {
     "type": "git",
@@ -36,6 +39,7 @@
     "grunt-contrib-jshint": "^0.11.2",
     "imports-loader": "^0.6.5",
     "jquery": "^3.1.0",
+    "jshint": "^2.9.2",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
     "mocha": "^2.2.5",
