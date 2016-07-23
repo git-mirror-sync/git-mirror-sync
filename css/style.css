@@ -1,14 +1,14 @@
-@import url(https://fonts.googleapis.com/css?family=Fjalla+One|Oxygen);
+@import url('http://fonts.googleapis.com/css?family=Fjalla+One|Oxygen');
 
 html {
     font-size: 62.5%;
 }
 
 body {
+    background-color: #FF4E00;
+    color: #333533;
     font-family: 'Oxygen', sans-serif;
     font-size: 1.2rem;
-    color: #333533;
-    background-color: #FF4E00;
 }
 
 h1,
@@ -18,40 +18,37 @@ h3 {
 }
 
 .logs {
-  overflow-x: scroll;
+    overflow-x: scroll;
 }
 
 .table .col-xs-4 {
-  max-width: 500px;
-  word-wrap: break-word;
+    max-width: 500px;
+    word-wrap: break-word;
 }
 
 .navbar-nav {
-  margin-right: 1rem;
+    margin-right: 1rem;
 }
 
 .navbar-nav a i {
-  padding-left: 0.5rem;
+    padding-left: 0.5rem;
 }
 
 .wrapper {
     background-color: #FFFFFF;
-    padding-top: 5rem;
     padding-bottom: 4rem;
+    padding-top: 5rem;
 }
 
 .row {
-  text-align: center;
-  margin-bottom: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
 }
 
 .step {
-  display: inline-block;
-  position: relative;
-  margin: 0rem 1rem;
-}
-
-.step-full {
+    display: inline-block;
+    margin: 0 1rem;
+    position: relative;
 }
 
 .icon {
@@ -67,9 +64,9 @@ a {
 }
 
 footer {
-  color: #9d9d9d;
+    color: #9d9d9d;
 }
 
 footer a {
-  color: #9d9d9d;
+    color: #9d9d9d;
 }
