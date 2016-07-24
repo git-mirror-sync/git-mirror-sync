@@ -2,12 +2,14 @@
   "name": "git-mirror-sync",
   "version": "1.2.3",
   "description": "A service that will receive post hooks, trigger a pull, then push to a mirror",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "grunt jshint",
     "web": "source .env && node ./src/web.js",
     "pack": "webpack -d",
-    "lint": "csslint src/css/style.css"
+    "lint": "csslint src/css/style.css",
+    "run": "electron .",
+    "jade": "jade -P views/index.jade -o ."
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,7 @@
     "codacy-coverage": "^1.1.2",
     "coveralls": "^2.11.2",
     "css-loader": "^0.23.1",
+    "electron": "^0.4.1",
     "exports-loader": "^0.6.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
