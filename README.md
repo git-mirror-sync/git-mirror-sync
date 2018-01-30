@@ -14,7 +14,7 @@ Git Mirror Sync is a GitHub service that allows users to easily backup there Git
 
 [![Screenshot](https://raw.githubusercontent.com/git-mirror-sync/git-mirror-sync/master/screenshot.png)]()
 
-##License
+## License
 This tool is protected by the [GNU General Public License v2](http://www.gnu.org/licenses/gpl-2.0.html).
 
 Copyright [Jeffrey Hann](http://jeffreyhann.ca/) 2015
